@@ -18,7 +18,7 @@ if __name__ == '__main__':
         [50, 2, 20]],
         dtype=np.float32)
     y = np.array([5.0, 8.2, 11, 6.6], dtype=np.float32)
-    new_flat = np.array([55, 2, 15], dtype=np.float32)
+    new_flat = np.array([[55, 2, 15]], dtype=np.float32)
 
     print("Предсказание модели: %s" % str(predict_price(x)))
     print("Настоящие цены: %s" % str(y))
