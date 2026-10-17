@@ -13,6 +13,7 @@ resolution-markers = [
 [manifest]
 members = [
     "ml-001",
+    "ml-002",
     "ml-training",
     "predictive-maintenance",
     "simple-price-predictor",
@@ -227,6 +228,11 @@ wheels = [
 name = "ml-001"
 version = "0.1.0"
 source = { virtual = "ML-001" }
+
+[[package]]
+name = "ml-002"
+version = "0.1.0"
+source = { virtual = "ML-002" }
 
 [[package]]
 name = "ml-training"
