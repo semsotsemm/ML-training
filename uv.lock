@@ -14,6 +14,7 @@ resolution-markers = [
 members = [
     "ml-001",
     "ml-002",
+    "ml-003",
     "ml-training",
     "predictive-maintenance",
     "simple-price-predictor",
@@ -233,6 +234,11 @@ source = { virtual = "ML-001" }
 name = "ml-002"
 version = "0.1.0"
 source = { virtual = "ML-002" }
+
+[[package]]
+name = "ml-003"
+version = "0.1.0"
+source = { virtual = "ML-003" }
 
 [[package]]
 name = "ml-training"
