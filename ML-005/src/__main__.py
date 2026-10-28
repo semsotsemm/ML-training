@@ -1,7 +1,6 @@
 import logging
 
-from sympy import lowergamma
-
+import numpy as np
 from loader import DataLoader
 from preprocessing import DataPreprocessor
 from utils.logger import configure_logger
@@ -11,6 +10,8 @@ import matplotlib.pyplot as plt
 
 logger = logging.getLogger(__name__)
 data_path = "./data/Car_sales.csv"
+
+np.random.seed(42)
 
 TARGET = "Price_in_thousands"
 
@@ -23,6 +24,7 @@ def main():
     try:
         data = loader.load_data(data_path)
         logger.info("Данные загружены в память. Датафрейм имеет форму: %s", data.shape)
+        data = data.drop(columns=["Model", "Power_perf_factor"])
 
         data = preprocessor.remove_duplicates(data)
         logger.info("Из датафрейма было удалены дублирующиеся строки")
@@ -79,6 +81,7 @@ def main():
         logger.info("Обучение завершено.")
         logger.info("train_mae: %s", train_mae)
         logger.info("test_mae: %s", test_mae)
+        logger.info("baseline_mae: %s", baseline_mae)
         # logger.info("train_prediction: %s", train_predictions)
         # logger.info("test_prediction: %s", test_predictions)
 

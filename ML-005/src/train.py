@@ -23,7 +23,7 @@ class DataTrainer:
         x_test: pd.DataFrame,
         y_test: pd.DataFrame,
     ):
-        model = Ridge(alpha=1.0)
+        model = Ridge(alpha=1)
         model.fit(x_train, y_train)
 
         train_predictions = model.predict(x_train)
