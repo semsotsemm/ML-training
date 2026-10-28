@@ -1,8 +1,11 @@
 import pandas as pd
 from typing import ClassVar
 from pathlib import Path
+import logging
 
 from utils import validator as vld
+
+logger = logging.getLogger(__name__)
 
 
 class DataLoader:
@@ -22,5 +25,6 @@ class DataLoader:
     @classmethod
     def load_data(cls, data_path: Path) -> pd.DataFrame:
         data = pd.read_csv(filepath_or_buffer=data_path)
+        logger.debug("Данные загружены в память. Выполняется валидация...")
         cls._validate("load_data", data)
         return data
