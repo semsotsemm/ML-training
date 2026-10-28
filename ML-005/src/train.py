@@ -26,9 +26,11 @@ class DataTrainer:
         model = Ridge(alpha=1.0)
         model.fit(x_train, y_train)
 
-        predictions = model.predict(x_test)
+        train_predictions = model.predict(x_train)
+        test_predictions = model.predict(x_test)
 
-        model_mae = mean_absolute_error(y_test, predictions)
+        train_mae = mean_absolute_error(y_train, train_predictions)
+        test_mae = mean_absolute_error(y_test, test_predictions)
 
         baseline = DummyRegressor(strategy="median")
         baseline.fit(x_train, y_train)
@@ -36,7 +38,15 @@ class DataTrainer:
         baseline_mae = mean_absolute_error(y_test, baseline_predictions)
 
         comparison = pd.DataFrame(
-            {"actual_price": y_test, "predicted_price": predictions}
+            {"actual_price": y_test, "predicted_price": test_predictions}
         )
 
-        return model_mae, baseline_mae, comparison, model
+        return (
+            train_predictions,
+            test_predictions,
+            train_mae,
+            test_mae,
+            baseline_mae,
+            comparison,
+            model,
+        )

@@ -1,10 +1,13 @@
 import logging
 
+from sympy import lowergamma
+
 from loader import DataLoader
 from preprocessing import DataPreprocessor
 from utils.logger import configure_logger
 from utils.validator import ValidationError
 from train import DataTrainer
+import matplotlib.pyplot as plt
 
 logger = logging.getLogger(__name__)
 data_path = "./data/Car_sales.csv"
@@ -62,13 +65,40 @@ def main():
             loader.save_data(x_train)
             logger.info("Полученные данные сохранены.")
 
-        model_mae, baseline_mae, comparison, model = trainer.train_model(
+        (
+            train_predictions,
+            test_predictions,
+            train_mae,
+            test_mae,
+            baseline_mae,
+            comparison,
+            model,
+        ) = trainer.train_model(
             x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test
         )
-        logger.info(
-            "Обучение завершено.\nMAE модели %s\nMAE базового решения: %s\nПервые 10 строк итогового словаря:%s"
-            % (model_mae, baseline_mae, comparison)
-        )
+        logger.info("Обучение завершено.")
+        logger.info("train_mae: %s", train_mae)
+        logger.info("test_mae: %s", test_mae)
+        # logger.info("train_prediction: %s", train_predictions)
+        # logger.info("test_prediction: %s", test_predictions)
+
+        fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+        axes[0].bar(["Train", "Test"], [train_mae, test_mae])
+        axes[0].set_title("Средняя абсолютная ошибка")
+        axes[0].set_ylabel("MAE, тыс. долларов")
+
+        axes[1].scatter(y_test, test_predictions, alpha=0.7)
+
+        low = min(y_test.min(), test_predictions.min())
+        high = max(y_test.max(), test_predictions.max())
+
+        axes[1].plot([low, high], [low, high], "--", color="black")
+        axes[1].set_xlabel("Фактическая цена")
+        axes[1].set_ylabel("Предсказанная цена")
+        axes[1].set_title("Предсказание на test")
+
+        plt.tight_layout()
+        plt.show()
 
     except ValidationError as e:
         logger.error(e)
