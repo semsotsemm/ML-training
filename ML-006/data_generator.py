@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import tifffile
+from scipy.ndimage import gaussian_filter
 
 
 np.random.seed(42)
@@ -202,8 +204,31 @@ def generate_cores():
     df.to_csv(file_path + file_name, index=False)
 
 
+def generate_permeability():
+    file_name = "permeability.tif"
+
+    np.random.seed(42)
+
+    grid_size = 500
+
+    raw_noise = np.random.normal(loc=0.0, scale=2.0, size=(grid_size, grid_size))
+
+    smoothed_noise = gaussian_filter(raw_noise, sigma=15)
+
+    base_permeability = 5.0  # Среднее значение, м/сут
+    permeability_matrix = base_permeability * np.exp(smoothed_noise)
+
+    rock_mask = gaussian_filter(np.random.normal(size=(grid_size, grid_size)), sigma=10)
+    permeability_matrix[rock_mask < -1.5] = 0.001
+
+    permeability_matrix = permeability_matrix.astype(np.float32)
+
+    tifffile.imwrite(file_path + file_name, permeability_matrix)
+    print(f"{file_name} successfully generated!")
+
+
 def main():
-    generate_cores()
+    generate_permeability()
 
 
 if __name__ == "__main__":
