@@ -196,7 +196,7 @@ def generate_cores():
     df.loc[nan_values_idx, "z_bottom"] = np.nan
 
     duplicates = df.sample(n=30, random_state=42)
-    pd.concat([df, duplicates], ignore_index=True)
+    df = pd.concat([df, duplicates], ignore_index=True)
 
     df = df.sample(frac=1, random_state=42).reset_index(drop=True)
     df.to_csv(file_path + file_name, index=False)
