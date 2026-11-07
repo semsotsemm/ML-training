@@ -3,8 +3,9 @@ import numpy as np
 
 np.random.seed(42)
 count_of_wells = 800
+file_path = "./data/raw/"
 
-def generate_data():
+def generate_wells_info():
     industrial_zone_x = np.random.normal(loc=1000, scale=300, size=500)
     industrial_zone_y = np.random.normal(loc=1000, scale=300, size=500)
 
@@ -61,8 +62,74 @@ def generate_data():
     df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 
 
-    df.to_csv("data/interim/wells.csv", index=False)
+    df.to_csv(f"{file_path}/wells.csv", index=False)
     print("Wells.csv successfully generated!")
 
+def generate_concentration_info():
+    count_of_all_wells = 830
+    count_of_measurement = 2400
+    file_name = "concentration.csv"
+    count_of_random_wells = count_of_measurement - count_of_all_wells
+
+    base_wells = [f"Well_{i:04d}" for i in range(1, count_of_all_wells + 1)]
+    extra_wells = np.random.choice(base_wells, size=count_of_random_wells, replace=True)
+    all_wells = np.concatenate([base_wells, extra_wells])
+
+    all_possible_date = pd.date_range(start="2020-01-01", end="2025-12-31")
+    random_dates = np.random.choice(all_possible_date.strftime("%d.%m.%Y"), size=count_of_measurement, replace=True)
+
+    df = pd.DataFrame(
+        {
+            "well_id": all_wells,
+            "t": random_dates,
+            "concentration": 0.0
+        }
+    )
+
+    df["well_num"] = df["well_id"].str.replace("Well_", "").astype(int)
+
+    is_industrial = df["well_num"] <= 500
+    is_water_fence = ((df["well_num"] > 500) & (df["well_num"] <= 700))
+    is_forest = df["well_num"] > 700
+
+    df.loc[is_industrial, "concentration"] = np.random.lognormal(mean=4.0, sigma=1.0, size=is_industrial.sum())
+    df.loc[is_water_fence, "concentration"] = np.random.lognormal(mean=1.0, sigma=0.5, size=is_water_fence.sum())
+    forest_spikes = np.random.exponential(scale=2.0, size=is_forest.sum())
+    forest_zeros = np.random.choice([0, 1], p=[0.95, 0.05], size=is_forest.sum())
+    df.loc[is_forest, 'concentration'] = forest_spikes * forest_zeros
+
+    df["concentration"] = df["concentration"].round(2)
+    df["concentration"] = df["concentration"].astype(object)
+
+    text_idx = np.random.choice(df.index, size=30, replace=False)
+    df.loc[text_idx[15:], "concentration"] = "Error"
+    df.loc[text_idx[:15], "concentration"] = "<0.05"
+
+    valid_idx = df.index.difference(text_idx)
+    negative_idx = np.random.choice(valid_idx, size=45, replace=False)
+    df.loc[negative_idx, "concentration"] = np.random.randint(low=-100.0, high=-1.0, size=45)
+
+    valid_idx = df.index.difference(negative_idx)
+    nan_concentration_idx = np.random.choice(valid_idx, size=30, replace=False)
+    df.loc[nan_concentration_idx, "concentration"] = np.nan
+
+    nan_date_idx = np.random.choice(df.index, size=30, replace=False)
+    df.loc[nan_date_idx, "t"] = np.nan
+
+    dup_source = df.sample(n=40, random_state=42)
+
+    df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+    dup_source.loc[dup_source.index[:20], 'concentration'] = 999.99
+    df = pd.concat([df, dup_source], ignore_index=True)
+
+    df = df.drop(columns=['well_num'])
+
+    df.to_csv(file_path + file_name, index=False)
+    print(f"{file_name} successfully generated!")
+
+def main():
+    generate_concentration_info()
+
+
 if __name__ == "__main__":
-    generate_data()
+    main()
