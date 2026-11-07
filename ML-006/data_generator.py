@@ -157,8 +157,53 @@ def generate_head():
     df.to_csv(file_path + file_name, index=False)
 
 
+def generate_cores():
+    file_name = "cores.csv"
+    available_lithology_list = ["Sand", "Clay", "Gravel", "Loam"]
+    lithology_list = []
+    z_top_list = []
+    z_bottom_list = []
+    list_well = []
+
+    for i in range(1, 831):
+        z_height = 0
+        count_of_lithologies = int(np.random.randint(low=3, high=7))
+
+        for _ in range(count_of_lithologies):
+            lithology_list.append(np.random.choice(available_lithology_list))
+
+            weight_lithology = np.random.randint(low=-40, high=-10)
+            z_top_list.append(z_height)
+            z_bottom_list.append(z_height + weight_lithology)
+
+            z_height += weight_lithology
+
+            list_well.append(f"Well_{i:04d}")
+
+    df = pd.DataFrame(
+        {
+            "well_id": list_well,
+            "z_top": z_top_list,
+            "z_bottom": z_bottom_list,
+            "lithology": lithology_list,
+        }
+    )
+
+    error_values_idx = np.random.choice(df.index, size=30, replace=False)
+    df.loc[error_values_idx, "z_top"] = np.random.randint(low=10, high=40, size=30)
+
+    nan_values_idx = np.random.choice(df.index, size=20, replace=False)
+    df.loc[nan_values_idx, "z_bottom"] = np.nan
+
+    duplicates = df.sample(n=30, random_state=42)
+    pd.concat([df, duplicates], ignore_index=True)
+
+    df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+    df.to_csv(file_path + file_name, index=False)
+
+
 def main():
-    generate_head()
+    generate_cores()
 
 
 if __name__ == "__main__":
