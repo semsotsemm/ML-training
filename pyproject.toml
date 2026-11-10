@@ -11,12 +11,14 @@ dependencies = [
     "kagglehub>=1.0.3",
     "matplotlib>=3.11.2",
     "numpy>=2.5.4",
+    "optuna>=5.0.0",
     "pandas>=3.0.6",
     "pyarrow>=26.0.1",
     "scikit-learn>=1.9.1",
     "scipy>=1.18.1",
     "tifffile>=2026.10.15",
     "torch>=2.14.1",
+    "xgboost>=3.4.1",
 ]
 
 [tool.uv.workspace]
