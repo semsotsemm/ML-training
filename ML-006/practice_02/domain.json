@@ -1,0 +1,17 @@
+{
+  "coordinate_units": "m",
+  "x_min": 0,
+  "y_min": 0,
+  "cell_size_m": 50,
+  "nx": 80,
+  "ny": 60,
+  "raster_nodata": -9999,
+  "layers": [
+    {"z_top": 0, "z_bottom": -20, "effective_porosity": 0.26},
+    {"z_top": -20, "z_bottom": -46, "effective_porosity": 0.23},
+    {"z_top": -46, "z_bottom": -76, "effective_porosity": 0.27}
+  ],
+  "mass_date": "2026-01-01",
+  "forecast_end": "2028-12-31",
+  "intake_threshold_ug_l": 5.0
+}
