@@ -1,0 +1,19 @@
+[project]
+name = "task-01-train"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ipykernel>=7.4.0",
+    "jupyter>=1.1.1",
+    "librt>=0.16.0",
+    "matplotlib>=3.11.2",
+    "mypy>=2.4.1",
+    "numpy>=2.5.4",
+    "pandas>=3.1.1",
+    "pyarrow>=26.0.1",
+    "pyplotlib>=0.0.56",
+    "scikit-learn>=1.9.1",
+    "tifffile>=2026.11.8",
+]

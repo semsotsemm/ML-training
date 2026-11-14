@@ -17,6 +17,7 @@ members = [
     "ml-003",
     "ml-005",
     "ml-006",
+    "ml-007",
     "ml-training",
     "pd-001",
     "predictive-maintenance",
@@ -1610,6 +1611,17 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [{ name = "scipy", specifier = ">=1.18.1" }]
+
+[[package]]
+name = "ml-007"
+version = "0.1.0"
+source = { virtual = "ML-007" }
+dependencies = [
+    { name = "ipykernel" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "ipykernel", specifier = ">=7.4.0" }]
 
 [[package]]
 name = "ml-training"

@@ -1,0 +1,4 @@
+zone,x_min,y_min,y_max,x_max
+Industrial_Zone,0,0,3000,1200
+Central_Zone,1200,0,3000,2800
+Water_Intake_Zone,2800,0,3000,4000
