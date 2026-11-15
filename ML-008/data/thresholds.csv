@@ -1,0 +1,7 @@
+scenario_id,min_completion_rate,max_mean_trip_s,max_mean_car_queue,max_red_per_tram,max_gap_per_tram
+avenue_balanced,0.90,305,1.45,2,1
+avenue_peak,0.90,305,1.85,2,1
+river_balanced,0.90,288,1.45,2,1
+river_bunched,0.90,300,1.65,2,1
+terminal_balanced,0.90,320,1.48,2,1
+terminal_peak,0.90,320,1.80,2,1

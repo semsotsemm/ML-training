@@ -16,4 +16,5 @@ dependencies = [
     "pyplotlib>=0.0.56",
     "scikit-learn>=1.9.1",
     "tifffile>=2026.11.8",
+    "xgboost>=3.4.1",
 ]

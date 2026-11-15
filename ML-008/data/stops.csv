@@ -1,0 +1,17 @@
+network_id,stop_id,track_id,position_m,dwell_s
+river,R-West,r_west,185,16
+river,R-South,r_south,216,19
+river,R-Market,r_shared,590,24
+river,R-Park,r_shared,901,19
+river,R-East,r_east,1395,19
+river,R-North,r_north,1455,18
+avenue,A-Gate,a_west,182,18
+avenue,A-Square,a_west,470,21
+avenue,A-Library,a_middle,995,23
+avenue,A-East,a_east,1500,21
+terminal,T-West,t_west,155,16
+terminal,T-South,t_south,205,17
+terminal,T-Market,t_shared,680,24
+terminal,T-Museum,t_shared,955,26
+terminal,T-East,t_east,1390,18
+terminal,T-North,t_north,1440,23

@@ -1,0 +1,7 @@
+scenario_id,network_id,horizon_s
+avenue_balanced,avenue,1450
+avenue_peak,avenue,1500
+river_balanced,river,1520
+river_bunched,river,1500
+terminal_balanced,terminal,1620
+terminal_peak,terminal,1700
